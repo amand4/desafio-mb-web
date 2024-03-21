@@ -1,0 +1,51 @@
+.form__step--buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.form-step__title {
+  font-weight: bold;
+}
+
+.form-group.radio-container {
+  display: flex;
+}
+
+.form-group.radio-container .form-group__radio-input:nth-child(2) {
+  margin-left: 20px;
+}
+.form-group__label {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-group__label-text {
+  color: #000;
+}
+
+.form-group__error-message {
+  color: #ff3860;
+  text-align: right;
+  font-size: 0.75rem;
+}
+
+.form-group__input {
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.form-group__input:disabled {
+  border-color: #dbdbdb;
+}
+
+@media (min-width: 1024px) {
+  .form__step--buttons {
+    flex-direction: row;
+  }
+}

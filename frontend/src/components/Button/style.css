@@ -1,0 +1,15 @@
+.button-component button {
+  background: #ff9901;
+  color: #fff;
+  border: 1px solid #ff9901;
+  border-radius: 5px;
+  padding: 10px 40px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.button-component button:hover {
+  filter: brightness(105%);
+}

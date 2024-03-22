@@ -1,5 +1,6 @@
 const express = require("express")
 const cors = require("cors")
+const path = require("path")
 
 const app = express()
 app.use(cors())
@@ -10,26 +11,6 @@ const PORT = 3000
 
 app.use(express.urlencoded({ extended: true }))
 
-app.get("/registration", (req, res) => {
-  res.send(`
-    <html>
-      <head>
-        <title>Seja bem vindo(a)</title>
-      </head>
-      <body>
-        <h1>Seja bem vindo(a)</h1>
-        <form action="/registration" method="post">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required>
-          <label for="name">Nome:</label>
-          <input type="text" id="name" name="name" required>
-          <button type="submit">Enviar</button>
-        </form>
-      </body>
-    </html>
-  `)
-})
-
 const validateIndividualFields = ({
   email,
   name,
@@ -37,8 +18,9 @@ const validateIndividualFields = ({
   dateBirth,
   phone,
   password,
+  type
 })  => {
-  return email && name && cpf && dateBirth && phone && password
+  return email && name && cpf && dateBirth && phone && password && type
 }
 
 const validateCompanyFields = ({
@@ -48,18 +30,21 @@ const validateCompanyFields = ({
   openDate,
   phone,
   password,
+  type
 })  => {
-  return email && socialReason && cnpj && openDate && phone && password
+  return email && socialReason && cnpj && openDate && phone && password && type
 }
+
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+app.get("/registration", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+})
 
 app.post("/registration", (req, res) => {
   const {
     type
   } = req.body
-
-  if (type !== "pf" && type !== "pj") {
-    return res.status(400).send("Invalid record type!")
-  }
 
   const isValidFields =
     type === "pf"
@@ -69,11 +54,9 @@ app.post("/registration", (req, res) => {
   if (!isValidFields) {
     return res
       .status(400)
-      .send(
-        "Please, fill in all required fields!"
-      )
+      .json({ message: "Erro ao cadastrar, verifique se preencheu todos os campos!" })
   }
-  res.status(200).json({ message: "User registration completed successfully!" })
+  res.status(200).json({ message: "Usuário cadastrado com sucesso!!" })
 })
 
 app.listen(PORT, () => {

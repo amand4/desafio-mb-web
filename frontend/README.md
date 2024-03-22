@@ -39,8 +39,6 @@ To start the project, run the following command:
 ```bash
 npm run dev
 ```
-Notes: The json server will be started along with the application.
-
 Open `http://localhost:5173` to view it in the browser.
 
 ### Compile and Minify for Production
@@ -48,6 +46,7 @@ Open `http://localhost:5173` to view it in the browser.
 ```sh
 npm run build
 ```
+- To test the complete flow you can run the server and access. Follow the server installation steps, run and access  **http://localhost:3000/registration**
 
 ### Feature: Registration user:
 

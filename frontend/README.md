@@ -46,8 +46,6 @@ Open `http://localhost:5173` to view it in the browser.
 ```sh
 npm run build
 ```
-- To test the complete flow you can run the server and access. Follow the server installation steps, run and access  **http://localhost:3000/registration**
-
 ### Feature: Registration user:
 
 1. **Step 1:**

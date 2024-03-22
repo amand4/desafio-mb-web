@@ -1,5 +1,6 @@
 <script>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
+import { validateForm } from "../../utils/validationSchemas"
 import ButtonComponent from '../../components/Button/ButtonComponent.vue'
 
 export default {
@@ -13,31 +14,23 @@ export default {
     }
   },
   setup(props, { emit }) {
-    const localFormData = ref({ ...props.formData })
-    const errors = ref({})
-
-    onMounted(() => {
-      localFormData.value = { ...props.formData }
+    const localFormData = ref({
+      password: props.formData.password
     })
+    const errors = ref({})
 
     const navigateToPreviousStep = () => {
       emit('back')
     }
 
-    const navigateToNextStep = () => {
-      if (validateForm()) {
-        emit('continue', localFormData.value)
-      }
+    const handleFormInput = () => {
+      validateForm(localFormData, errors)
     }
 
-    const validateForm = () => {
-      errors.value = {}
-
-      if (!localFormData.value.password) {
-        errors.value.password = 'O campo senha é obrigatório'
+    const navigateToNextStep = () => {
+      if (validateForm(localFormData, errors)) {
+        emit('continue', localFormData.value)
       }
-
-      return Object.values(errors.value).every(error => !error)
     }
 
     return {
@@ -45,7 +38,7 @@ export default {
       navigateToPreviousStep,
       navigateToNextStep,
       errors,
-      validateForm
+      handleFormInput
     }
   }
 }
@@ -63,7 +56,7 @@ export default {
         <label for="password" class="form-group__label-text">Sua senha *</label>
         <p class="form-group__error-message" v-if="errors.password">{{ errors.password }}</p>
       </div>
-      <input class="form-group__input" type="password" id="password" name="password" v-model="localFormData.password" @input="validateForm">
+      <input class="form-group__input" type="password" id="password" name="password" v-model="localFormData.password" @input="handleFormInput">
     </div>
 
     <div class="form__step--buttons">

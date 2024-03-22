@@ -1,14 +1,15 @@
 <script setup>
 import { ref } from 'vue'
-import { post } from '../../services/api'
 import StepInitialInformation from '../Steps/StepInitialInformation.vue'
 import StepAdditionalInformation from '../Steps/StepAdditionalInformation.vue'
 import StepCredentials from '../Steps/StepCredentials.vue'
 import StepSummaryConfirmation from '../Steps/StepSummaryConfirmation.vue'
+import { useNotification } from "@kyvg/vue3-notification"
 
 const currentStep = ref(1)
 const formData = ref({})
 const isLoading = ref(false)
+
 
 const stepComponents = {
   1: StepInitialInformation,
@@ -16,6 +17,7 @@ const stepComponents = {
   3: StepCredentials,
   4: StepSummaryConfirmation
 }
+const { notify }  = useNotification()
 
 const handleContinueStep = (data) => {
   updateFormData(data)
@@ -25,24 +27,49 @@ const handleContinueStep = (data) => {
 const handlePreviousStep = () => {
   goToPreviousStep()
 }
-
-
-const handleSubmit = async (formData) => {
+const handleSubmit = async () => {
   try {
     isLoading.value = true
-    const data = { ...formData.value }
-    const response = await post('/registration', data)
+    const payload = { ...formData.value }
+    const BASE_URL = 'http://localhost:3000'
+
+    const response = await fetch(`${BASE_URL}/registration`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    const data = await response.json()
+
+    let notificationType = 'success'
+
     if (response.ok) {
-      console.error('Erro ao enviar dados para a API:')
       formData.value = {}
-      window.location.reload()
+      currentStep.value = 1
+    }
+
+    if (response.status === 400) {
+      notificationType = 'error'
+    } else if (response.status === 500) {
+      notificationType = 'error'
+    }
+  
+    notify({
+      title: notificationType === 'success' ? 'Sucesso' : 'Ops, deu erro!',
+      text: data.message,
+      type: notificationType,
+      duration: 5000
+    })
+
+    if (!response.ok) {
+      console.error('Unexpected server error', response.message)
     }
   } catch (error) {
-    console.error('Erro ao enviar dados para a API:', error)
-  } finally {
-    isLoading.value = false
+    console.error('Error:', error.message)
   }
 }
+
 
 function updateFormData(data) {
   formData.value = { ...formData.value, ...data }
@@ -73,5 +100,4 @@ function goToPreviousStep() {
       </form>
     </div>
   </section>
-
 </template>

@@ -11,4 +11,5 @@ export default {
 
 <template>
   <UserRegistrationView />
+  <notifications />
 </template>

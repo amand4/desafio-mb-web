@@ -23,7 +23,7 @@
           <label for="cpf" class="form-group__label-text">CPF *</label>
           <p class="form-group__error-message" v-if="errors.cpf">{{ errors.cpf }}</p>
         </div>
-        <input class="form-group__input" type="text" id="cpf" name="cpf" v-model="localFormData.cpf"
+        <input class="form-group__input" type="text" id="cpf" name="cpf" v-model="localFormData.cpf" v-mask="'###.###.###-##'"
           @input="handleFormInput">
 
       </div>
@@ -41,7 +41,7 @@
           <label for="phone" class="form-group__label-text">Número de telefone *</label>
           <p class="form-group__error-message" v-if="errors.phone">{{ errors.phone }}</p>
         </div>
-        <input class="form-group__input" type="tel" id="phone" name="phone" v-model="localFormData.phone"
+        <input class="form-group__input" type="tel" id="phone" name="phone" v-model="localFormData.phone" v-mask="'(##) ####-#####'"
           @input="handleFormInput">
       </div>
     </div>
@@ -61,7 +61,7 @@
 
           <p class="form-group__error-message" v-if="errors.cnpj">{{ errors.cnpj }}</p>
         </div>
-        <input class="form-group__input" type="text" id="cnpj" name="cnpj" v-model="localFormData.cnpj"
+        <input class="form-group__input" type="text" id="cnpj" name="cnpj" v-model="localFormData.cnpj" v-mask="'##.###.###/####-##'"
           @input="handleFormInput">
       </div>
       <div class="form-group">
@@ -79,7 +79,7 @@
 
           <p class="form-group__error-message" v-if="errors.phone">{{ errors.phone }}</p>
         </div>
-        <input class="form-group__input" type="tel" id="phone" name="phone" v-model="localFormData.phone"
+        <input class="form-group__input" type="tel" id="phone" name="phone" v-model="localFormData.phone" v-mask="'(##) ####-#####'"
           @input="handleFormInput">
       </div>
     </div>

@@ -8,7 +8,6 @@ import { useNotification } from "@kyvg/vue3-notification"
 
 const currentStep = ref(1)
 const formData = ref({})
-const isLoading = ref(false)
 
 
 const stepComponents = {
@@ -29,7 +28,6 @@ const handlePreviousStep = () => {
 }
 const handleSubmit = async () => {
   try {
-    isLoading.value = true
     const payload = { ...formData.value }
     const BASE_URL = 'http://localhost:3000'
 
@@ -96,7 +94,7 @@ function goToPreviousStep() {
       </div>
       <form @submit.prevent="handleSubmit" class="userRegistration__form">
         <component :is="stepComponents[currentStep]" @back="handlePreviousStep" @continue="handleContinueStep"
-          @submit="handleSubmit" :formData="formData" isLoading />
+          @submit="handleSubmit" :formData="formData" />
       </form>
     </div>
   </section>

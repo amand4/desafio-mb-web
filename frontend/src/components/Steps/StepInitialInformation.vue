@@ -60,7 +60,6 @@ export default {
           {{ errors.email }}
         </p>
       </div>
-
       <input
         class="form-group__input"
         type="email"

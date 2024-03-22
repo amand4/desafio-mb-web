@@ -37,6 +37,13 @@ export const schemas = {
     ],
     cpf: [
       {
+        condition: (value) => {
+          const onlyNumbers = value && value.replace(/\D/g, '')
+          return value && onlyNumbers.length < 11
+        },
+        message: 'Cpf inválido'
+      },
+      {
         condition: (value) => !value,
         message: 'Campo cpf é obrigatório'
       },
@@ -52,6 +59,13 @@ export const schemas = {
         condition: (value) => !value,
         message: 'Campo telefone é obrigatório'
       },
+      {
+        condition: (value) => {
+          const onlyNumbers = value && value.replace(/\D/g, '')
+          return value && onlyNumbers.length < 10
+        },
+        message: 'Telefone inválido'
+      }
     ]
   },
 
@@ -64,9 +78,16 @@ export const schemas = {
     ],
     cnpj: [
       {
+        condition: (value) => {
+          const onlyNumbers = value && value.replace(/\D/g, '')
+          return value && onlyNumbers.length < 14
+        },
+        message: 'CNPJ inválido'
+      },
+      {
         condition: (value) => !value,
         message: 'Campo cnpj é obrigatório'
-      },
+      }
     ],
     openDate: [
       {
@@ -79,6 +100,14 @@ export const schemas = {
         condition: (value) => !value,
         message: 'Campo telefone é obrigatório'
       },
+      {
+        condition: (value) => {
+          const onlyNumbers = value && value.replace(/\D/g, '')
+          return value && onlyNumbers.length < 10
+        },
+        message: 'Telefone inválido'
+      }
+
     ]
   }
 }

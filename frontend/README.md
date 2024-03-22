@@ -21,7 +21,7 @@ This project is a front-end application that offers user registration functional
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node 16
+- Node 16 or 16^
 - Git 2
 
 ### Install project
